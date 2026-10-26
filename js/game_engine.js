@@ -244,13 +244,8 @@ async function submitAnswer(finalNum) {
       if (currentQuestionIdx < bank.length) {
         loadQuestion(currentLevel, currentQuestionIdx);
       } else {
-        if (currentLevel === 1) {
-          showLevelCompleteModal100();
-        } else {
-          showCustomModal(true, `🏆 Luar biasa! Kamu berhasil menyelesaikan seluruh soal di Level ${currentLevel}!`, () => {
-            backToMenu();
-          });
-        }
+        // Berlaku untuk SEMUA LEVEL (1, 2, dan 3) ketika selesai
+        showLevelCompleteModal100();
       }
     });
   } else {
@@ -262,7 +257,7 @@ async function submitAnswer(finalNum) {
   }
 }
 
-// Pop-up Heboh Khusus Level 1 (Skor 100 + Efek Konfeti Loop)
+// Pop-up Heboh Selesai Level (Berlaku untuk Level 1, 2, & 3 + Efek Konfeti Loop)
 function showLevelCompleteModal100() {
   const modal = document.getElementById('custom-modal');
   const card = document.getElementById('modal-card');
@@ -282,16 +277,16 @@ function showLevelCompleteModal100() {
 
   if (title) {
     title.className = "text-3xl font-black mb-2 text-amber-600 tracking-wide";
-    title.innerText = "🎉 SELAMAT! SKOR 100! 🌟";
+    title.innerText = `🎉 SELAMAT! LEVEL ${currentLevel} SELESAI! 🌟`;
   }
 
   if (message) {
     message.innerHTML = `
       <div class="bg-amber-100 border border-amber-300 rounded-2xl p-4 mb-4 relative z-10">
         <p class="text-4xl font-black text-amber-700 mb-1">NILAI: 100</p>
-        <p class="text-sm font-bold text-amber-900">Luar biasa! Kamu menjawab SEMUA SOAL Level 1 (Nilai Tempat) dengan BENAR SEPENUHNYA! 🚀✨</p>
+        <p class="text-sm font-bold text-amber-900">Luar biasa! Kamu berhasil menuntaskan seluruh soal di Level ${currentLevel} dengan SEMPURNA! 🚀✨</p>
       </div>
-      <p class="text-slate-600 text-xs font-medium relative z-10">Lenteramu kini menyala paling terang di desa petualangan!</p>
+      <p class="text-slate-600 text-xs font-medium relative z-10">Lenteramu kini menyala semakin terang di desa petualangan!</p>
     `;
   }
 
