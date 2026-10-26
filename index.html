@@ -31,38 +31,45 @@
   </div>
 
   <!-- VIEW 1: HALAMAN PILIH LEVEL (MENU UTAMA) -->
-  <div id="level-select-screen" class="flex flex-col items-center justify-center flex-grow py-12">
-    <div class="bg-amber-400 text-white px-6 py-3 rounded-2xl text-xl font-bold mb-4 shadow-lg flex items-center gap-3">
-      <i class="fa-solid fa-lightbulb"></i> LENTERA - PILIH MISI LEVEL
-    </div>
-    <p class="text-slate-500 mb-8 text-center max-w-md">Pilih tingkat petualangan numerasimu! Gunakan sensor tangan atau klik untuk memilih.</p>
-    
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl px-4">
-      <!-- Level 1 -->
-      <div onclick="startLevel(1)" class="level-card bg-white border-2 border-teal-200 hover:border-teal-500 p-6 rounded-3xl shadow-sm hover:shadow-xl transition cursor-pointer flex flex-col items-center text-center group">
-        <div class="w-16 h-16 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center text-2xl font-black mb-4 group-hover:scale-110 transition">1</div>
-        <h3 class="text-xl font-bold text-slate-800 mb-2">Level 1</h3>
-        <p class="text-xs text-slate-500 mb-4">Nilai Tempat (5 Soal)</p>
-        <span class="bg-teal-50 text-teal-700 text-xs font-bold px-4 py-2 rounded-xl border border-teal-200 w-full">Mulai Level 1</span>
-      </div>
-
-      <!-- Level 2 -->
-      <div onclick="startLevel(2)" class="level-card bg-white border-2 border-amber-200 hover:border-amber-500 p-6 rounded-3xl shadow-sm hover:shadow-xl transition cursor-pointer flex flex-col items-center text-center group">
-        <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl font-black mb-4 group-hover:scale-110 transition">2</div>
-        <h3 class="text-xl font-bold text-slate-800 mb-2">Level 2</h3>
-        <p class="text-xs text-slate-500 mb-4">Pengurangan Seru (5 Soal)</p>
-        <span class="bg-amber-50 text-amber-700 text-xs font-bold px-4 py-2 rounded-xl border border-amber-200 w-full">Mulai Level 2</span>
-      </div>
-
-      <!-- Level 3 -->
-      <div onclick="startLevel(3)" class="level-card bg-white border-2 border-purple-200 hover:border-purple-500 p-6 rounded-3xl shadow-sm hover:shadow-xl transition cursor-pointer flex flex-col items-center text-center group">
-        <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl font-black mb-4 group-hover:scale-110 transition">3</div>
-        <h3 class="text-xl font-bold text-slate-800 mb-2">Level 3</h3>
-        <p class="text-xs text-slate-500 mb-4">Kombinasi ± (5 Soal)</p>
-        <span class="bg-purple-50 text-purple-700 text-xs font-bold px-4 py-2 rounded-xl border border-purple-200 w-full">Mulai Level 3</span>
-      </div>
-    </div>
+  <div id="level-select-screen" class="flex flex-col items-center justify-center min-h-screen p-6 bg-slate-50">
+  <div class="text-center mb-8">
+    <h1 class="text-4xl font-black text-slate-800 mb-2">Petualangan Numerasi LENTERA</h1>
+    <p class="text-slate-600 text-lg">Pilih level petualanganmu atau gunakan sensor tangan!</p>
   </div>
+
+  <!-- Grid Pilihan Level 1 sampai 4 -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl w-full">
+    
+    <!-- Level 1 -->
+    <div onclick="startLevel(1)" class="level-card bg-white p-6 rounded-3xl shadow-lg border-2 border-teal-100 hover:border-teal-500 transition cursor-pointer flex flex-col items-center text-center">
+      <div class="w-16 h-16 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center text-2xl mb-4 font-bold">1</div>
+      <h3 class="text-xl font-bold text-slate-800 mb-1">Level 1</h3>
+      <p class="text-slate-500 text-sm">Nilai Tempat & Bilangan Dasar</p>
+    </div>
+
+    <!-- Level 2 -->
+    <div onclick="startLevel(2)" class="level-card bg-white p-6 rounded-3xl shadow-lg border-2 border-amber-100 hover:border-amber-500 transition cursor-pointer flex flex-col items-center text-center">
+      <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mb-4 font-bold">2</div>
+      <h3 class="text-xl font-bold text-slate-800 mb-1">Level 2</h3>
+      <p class="text-slate-500 text-sm">Pengurangan Dasar & Kontekstual</p>
+    </div>
+
+    <!-- Level 3 -->
+    <div onclick="startLevel(3)" class="level-card bg-white p-6 rounded-3xl shadow-lg border-2 border-purple-100 hover:border-purple-500 transition cursor-pointer flex flex-col items-center text-center">
+      <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl mb-4 font-bold">3</div>
+      <h3 class="text-xl font-bold text-slate-800 mb-1">Level 3</h3>
+      <p class="text-slate-500 text-sm">Kombinasi Penjumlahan & Pengurangan</p>
+    </div>
+
+    <!-- Level 4 (BARU) -->
+    <div onclick="startLevel(4)" class="level-card bg-white p-6 rounded-3xl shadow-lg border-2 border-rose-100 hover:border-rose-500 transition cursor-pointer flex flex-col items-center text-center">
+      <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center text-2xl mb-4 font-bold">4</div>
+      <h3 class="text-xl font-bold text-slate-800 mb-1">Level 4</h3>
+      <p class="text-slate-500 text-sm">Hitung Campuran & Cerita Kompleks</p>
+    </div>
+
+  </div>
+</div>
 
   <!-- VIEW 2: HALAMAN GAME UTAMA -->
   <div id="game-screen" class="hidden flex-col flex-grow justify-between">
@@ -166,8 +173,8 @@
 
   <!-- SCRIPT FILES SINKRON -->
   <script src="js/soal_config.js"></script>
-  <script src="js/modal.js"></script>
   <script src="js/game_engine.js"></script>
+  <script src="js/modal.js"></script>
   <script src="js/gesture_sensor.js"></script>
 </body>
 </html>

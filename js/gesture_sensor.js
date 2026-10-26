@@ -1,117 +1,19 @@
-let hoveredTarget = null;
-let hoverStartTime = 0;
-const DWELL_TIME_MS = 1000; // Tahan 1 detik untuk klik otomatis
+// ==========================================
+// GESTURE SENSOR - TOUCHLESS LENTERA (LEVEL 1-4)
+// ==========================================
 
-let currentX = window.innerWidth / 2;
-let currentY = window.innerHeight / 2;
-const SMOOTHING_FACTOR = 0.15; 
+let handHoverTarget = null;
+let hoverTimer = null;
+const HOVER_DURATION = 1000; // Tahan jari 1 detik untuk melakukan klik/pilih
 
-function initMediaPipeHands() {
-  const videoElement = document.getElementById('webcam-video');
-  const canvasElement = document.getElementById('gesture-canvas');
-  const canvasCtx = canvasElement.getContext('2d');
-  const statusElement = document.getElementById('gesture-status');
-  const cursor = document.getElementById('virtual-cursor');
+const videoElement = document.getElementById('webcam-video');
+const canvasElement = document.getElementById('gesture-canvas');
+const canvasCtx = canvasElement ? canvasElement.getContext('2d') : null;
+const virtualCursor = document.getElementById('virtual-cursor');
+const gestureStatus = document.getElementById('gesture-status');
 
-  function onResults(results) {
-    canvasElement.width = videoElement.videoWidth || 320;
-    canvasElement.height = videoElement.videoHeight || 240;
-
-    canvasCtx.save();
-    canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-    canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
-
-    if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
-      statusElement.innerText = "• Tangan Terdeteksi!";
-      statusElement.className = "absolute bottom-1 left-1 bg-purple-950/80 px-1.5 py-0.5 rounded text-[9px] text-purple-300 border border-purple-800/50";
-      cursor.classList.remove('hidden');
-
-      for (const landmarks of results.multiHandLandmarks) {
-        drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {color: '#a855f7', lineWidth: 2.5});
-        drawLandmarks(canvasCtx, landmarks, {color: '#c084fc', lineWidth: 1, radius: 3.5});
-
-        const indexTip = landmarks[8];
-        const targetX = (1 - indexTip.x) * window.innerWidth;
-        const targetY = indexTip.y * window.innerHeight;
-
-        currentX += (targetX - currentX) * SMOOTHING_FACTOR;
-        currentY += (targetY - currentY) * SMOOTHING_FACTOR;
-
-        cursor.style.left = `${currentX}px`;
-        cursor.style.top = `${currentY}px`;
-
-        let currentHovered = null;
-        let targetIdentifier = null;
-
-        const modal = document.getElementById('custom-modal');
-        const isModalOpen = modal && !modal.classList.contains('hidden');
-
-        const levelSelectScreen = document.getElementById('level-select-screen');
-        const isLevelSelectOpen = levelSelectScreen && !levelSelectScreen.classList.contains('hidden');
-
-        if (isModalOpen) {
-          const modalBtn = document.getElementById('modal-btn');
-          if (modalBtn) {
-            const rect = modalBtn.getBoundingClientRect();
-            if (currentX >= rect.left && currentX <= rect.right && currentY >= rect.top && currentY <= rect.bottom) {
-              currentHovered = modalBtn;
-              targetIdentifier = "MODAL_BTN";
-            }
-          }
-        } else if (isLevelSelectOpen) {
-          const levelCards = document.querySelectorAll('.level-card');
-          levelCards.forEach((card, idx) => {
-            const rect = card.getBoundingClientRect();
-            if (currentX >= rect.left && currentX <= rect.right && currentY >= rect.top && currentY <= rect.bottom) {
-              currentHovered = card;
-              targetIdentifier = "LEVEL_" + (idx + 1);
-            }
-          });
-        } else {
-          document.querySelectorAll('.keypad-btn').forEach(btn => {
-            const rect = btn.getBoundingClientRect();
-            if (currentX >= rect.left && currentX <= rect.right && currentY >= rect.top && currentY <= rect.bottom) {
-              currentHovered = btn;
-              targetIdentifier = "NUM_" + btn.dataset.num;
-            }
-          });
-        }
-
-        if (currentHovered) {
-          if (hoveredTarget === targetIdentifier) {
-            const elapsed = Date.now() - hoverStartTime;
-            cursor.style.borderColor = '#10b981';
-            
-            if (elapsed >= DWELL_TIME_MS) {
-              if (isModalOpen) {
-                closeCustomModal(); 
-              } else if (isLevelSelectOpen) {
-                const lvlNum = parseInt(targetIdentifier.split('_')[1]);
-                startLevel(lvlNum);
-              } else {
-                handleKeypadInput(parseInt(currentHovered.dataset.num)); 
-              }
-              hoveredTarget = null;
-              cursor.style.borderColor = '#f59e0b';
-            }
-          } else {
-            hoveredTarget = targetIdentifier;
-            hoverStartTime = Date.now();
-          }
-        } else {
-          hoveredTarget = null;
-          cursor.style.borderColor = '#f59e0b';
-        }
-      }
-    } else {
-      statusElement.innerText = "• Arahkan Tangan ke Kamera";
-      statusElement.className = "absolute bottom-1 left-1 bg-purple-950/80 px-1.5 py-0.5 rounded text-[9px] text-amber-300 border border-purple-800/50";
-      cursor.classList.add('hidden');
-      hoveredTarget = null;
-    }
-    canvasCtx.restore();
-  }
-
+// Inisialisasi MediaPipe Hands
+if (typeof Hands !== 'undefined' && videoElement) {
   const hands = new Hands({
     locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
   });
@@ -119,30 +21,128 @@ function initMediaPipeHands() {
   hands.setOptions({
     maxNumHands: 1,
     modelComplexity: 1,
-    minDetectionConfidence: 0.7,
-    minTrackingConfidence: 0.7
+    minDetectionConfidence: 0.6,
+    minTrackingConfidence: 0.6
   });
 
-  hands.onResults(onResults);
+  hands.onResults(onHandResults);
 
-  const camera = new Camera(videoElement, {
-    onFrame: async () => {
-      await hands.send({ image: videoElement });
-    },
-    width: 320,
-    height: 240
-  });
-
-  camera.start()
-    .then(() => {
-      statusElement.innerText = "• Kamera Aktif";
-    })
-    .catch(err => {
-      console.error("Gagal kamera MediaPipe:", err);
-      statusElement.innerText = "• Error Kamera";
+  if (typeof Camera !== 'undefined') {
+    const camera = new Camera(videoElement, {
+      onFrame: async () => {
+        await hands.send({ image: videoElement });
+      },
+      width: 320,
+      height: 240
     });
+    camera.start().catch(err => {
+      console.warn("Kamera tidak diizinkan atau tidak ditemukan:", err);
+      if (gestureStatus) gestureStatus.innerText = "• Kamera Nonaktif";
+    });
+  }
 }
 
-window.addEventListener('load', () => {
-  initMediaPipeHands();
-});
+// Handler Deteksi Tangan & Kursor Virtual
+function onHandResults(results) {
+  if (!canvasCtx || !canvasElement) return;
+
+  canvasCtx.save();
+  canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+  canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+
+  if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+    const landmarks = results.multiHandLandmarks[0];
+
+    // Gambar titik penanda tangan
+    if (typeof drawConnectors !== 'undefined' && typeof HAND_CONNECTIONS !== 'undefined') {
+      drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, { color: '#a855f7', lineWidth: 2 });
+      drawLandmarks(canvasCtx, landmarks, { color: '#ec4899', lineWidth: 1, radius: 3 });
+    }
+
+    // Gunakan Ujung Jari Telunjuk (Landmark 8)
+    const indexTip = landmarks[8];
+    const cursorX = (1 - indexTip.x) * window.innerWidth;
+    const cursorY = indexTip.y * window.innerHeight;
+
+    updateVirtualCursor(cursorX, cursorY);
+    processCursorHover(cursorX, cursorY);
+
+    if (gestureStatus) gestureStatus.innerText = "• Tangan Terdeteksi";
+  } else {
+    if (virtualCursor) virtualCursor.classList.add('hidden');
+    clearHoverTimer();
+    if (gestureStatus) gestureStatus.innerText = "• Memindai Tangan...";
+  }
+
+  canvasCtx.restore();
+}
+
+// Perbarui Posisi Kursor di Layar
+function updateVirtualCursor(x, y) {
+  if (!virtualCursor) return;
+  virtualCursor.classList.remove('hidden');
+  virtualCursor.style.left = `${x}px`;
+  virtualCursor.style.top = `${y}px`;
+}
+
+// Deteksi Elemen Interaktif di Bawah Kursor (Level 1-4, Keypad, Modal)
+function processCursorHover(x, y) {
+  const element = document.elementFromPoint(x, y);
+  if (!element) {
+    clearHoverTimer();
+    return;
+  }
+
+  // Mendukung kartu level 1-4, tombol keypad, tombol pop-up modal, dan elemen berpemicu onclick
+  const targetBtn = element.closest('button, .level-card, .modal-action-btn, [onclick]');
+
+  if (targetBtn) {
+    if (handHoverTarget !== targetBtn) {
+      clearHoverTimer();
+      handHoverTarget = targetBtn;
+      targetBtn.classList.add('ring-4', 'ring-purple-400', 'scale-105');
+
+      hoverTimer = setTimeout(() => {
+        executeGestureClick(targetBtn);
+        clearHoverTimer();
+      }, HOVER_DURATION);
+    }
+  } else {
+    clearHoverTimer();
+  }
+}
+
+// Eksekusi Pemicu Klik dari Sensor Gestur
+function executeGestureClick(target) {
+  if (!target) return;
+
+  // Efek visual klik
+  target.classList.add('scale-95');
+  setTimeout(() => target.classList.remove('scale-95'), 200);
+
+  // Jika tombol keypad angka
+  if (target.classList.contains('keypad-btn')) {
+    const rawText = target.innerText.trim();
+    const cleanNum = rawText.replace(/[^0-9]/g, '');
+
+    if (cleanNum !== "" && typeof handleKeypadInput === 'function') {
+      handleKeypadInput(cleanNum);
+    } else {
+      target.click();
+    }
+  } else {
+    // Untuk kartu pemilihan level (termasuk Level 4) & tombol modal
+    target.click();
+  }
+}
+
+function clearHoverTimer() {
+  if (hoverTimer) {
+    clearTimeout(hoverTimer);
+    hoverTimer = null;
+  }
+  if (handHoverTarget) {
+    handHoverTarget.classList.remove('ring-4', 'ring-purple-400', 'scale-105');
+    handHoverTarget = null;
+  }
+}
