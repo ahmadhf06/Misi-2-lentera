@@ -100,7 +100,7 @@ function processCursorHover(x, y) {
     if (handHoverTarget !== targetBtn) {
       clearHoverTimer();
       handHoverTarget = targetBtn;
-      targetBtn.classList.add('ring-4', 'ring-purple-400', 'scale-105');
+      targetBtn.classList.add('ring-4', 'ring-green-400', 'scale-105');
 
       hoverTimer = setTimeout(() => {
         executeGestureClick(targetBtn);
@@ -142,7 +142,7 @@ function clearHoverTimer() {
     hoverTimer = null;
   }
   if (handHoverTarget) {
-    handHoverTarget.classList.remove('ring-4', 'ring-purple-400', 'scale-105');
+    handHoverTarget.classList.remove('ring-4', 'ring-green-400', 'scale-105');
     handHoverTarget = null;
   }
 }

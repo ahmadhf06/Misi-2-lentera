@@ -108,21 +108,30 @@ function renderVisualObjects(containerId, count, iconClass, colorClass) {
   }
 }
 
-// Update tampilan kotak slot jawaban (2 digit dengan format aman)
+// Update tampilan kotak slot jawaban (1 kotak khusus Level 1, 2 kotak untuk Level 2-4)
 function updateAnswerSlots() {
   const wrapper = document.getElementById('slot-jawaban-wrapper');
   if (!wrapper) return;
   
   const cleanStr = userInputStr.replace(/[^0-9]/g, '');
-  const digit1 = cleanStr.length > 0 ? cleanStr[0] : '?';
-  const digit2 = cleanStr.length > 1 ? cleanStr[1] : '?';
 
-  wrapper.innerHTML = `
-    <div class="flex items-center justify-center gap-3 my-2">
-      <div class="w-20 h-20 ${digit1 !== '?' ? 'bg-teal-50 border-teal-500 text-teal-700 font-extrabold' : 'bg-slate-50 border-dashed border-teal-400 text-slate-300'} border-2 rounded-2xl flex items-center justify-center text-4xl shadow-inner transition-all">${digit1}</div>
-      <div class="w-20 h-20 ${digit2 !== '?' ? 'bg-teal-50 border-teal-500 text-teal-700 font-extrabold' : 'bg-slate-50 border-dashed border-teal-400 text-slate-300'} border-2 rounded-2xl flex items-center justify-center text-4xl shadow-inner transition-all">${digit2}</div>
-    </div>
-  `;
+  if (currentLevel === 1) {
+    const digit1 = cleanStr.length > 0 ? cleanStr[0] : '?';
+    wrapper.innerHTML = `
+      <div class="flex items-center justify-center gap-3 my-2">
+        <div class="w-24 h-24 ${digit1 !== '?' ? 'bg-teal-50 border-teal-500 text-teal-700 font-extrabold' : 'bg-slate-50 border-dashed border-teal-400 text-slate-300'} border-2 rounded-2xl flex items-center justify-center text-5xl shadow-inner transition-all">${digit1}</div>
+      </div>
+    `;
+  } else {
+    const digit1 = cleanStr.length > 0 ? cleanStr[0] : '?';
+    const digit2 = cleanStr.length > 1 ? cleanStr[1] : '?';
+    wrapper.innerHTML = `
+      <div class="flex items-center justify-center gap-3 my-2">
+        <div class="w-20 h-20 ${digit1 !== '?' ? 'bg-teal-50 border-teal-500 text-teal-700 font-extrabold' : 'bg-slate-50 border-dashed border-teal-400 text-slate-300'} border-2 rounded-2xl flex items-center justify-center text-4xl shadow-inner transition-all">${digit1}</div>
+        <div class="w-20 h-20 ${digit2 !== '?' ? 'bg-teal-50 border-teal-500 text-teal-700 font-extrabold' : 'bg-slate-50 border-dashed border-teal-400 text-slate-300'} border-2 rounded-2xl flex items-center justify-center text-4xl shadow-inner transition-all">${digit2}</div>
+      </div>
+    `;
+  }
 }
 
 // Render tombol keypad angka (0-9) interaktif
@@ -150,12 +159,13 @@ function renderKeypad() {
 // Logika saat tombol angka ditekan atau di-trigger sensor
 function handleKeypadInput(num) {
   const cleanNum = String(num).replace(/[^0-9]/g, '');
-  if (userInputStr.length < 2 && cleanNum !== "") {
+  const maxDigits = (currentLevel === 1) ? 1 : 2;
+
+  if (userInputStr.length < maxDigits && cleanNum !== "") {
     userInputStr += cleanNum;
     updateAnswerSlots();
     
-    // Jika sudah terisi 2 digit, langsung evaluasi otomatis
-    if (userInputStr.length === 2) {
+    if (userInputStr.length === maxDigits) {
       setTimeout(() => {
         checkAnswer();
       }, 300);

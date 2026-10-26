@@ -161,7 +161,7 @@ function showModalSelesaiLevel(level) {
             </div>
           </div>
 
-          <p class="text-xs text-slate-500 mb-6 italic">Semua kalimatmu tersusun dengan benar. Kamu hebat sekali! 🌟</p>
+          <p class="text-xs text-slate-500 mb-6 italic">Semua perhitunganmu benar. Kamu hebat sekali! 🌟</p>
 
           <!-- Tombol Aksi (Main Lagi & Pilih Level) -->
           <div class="flex gap-3">

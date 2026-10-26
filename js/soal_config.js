@@ -10,59 +10,59 @@ const soalBank = {
   // LEVEL 1: Nilai Tempat & Penjumlahan Dasar
   1: [
     {
-      teksSoal: "Lumi membawa <b>12 apel</b>, lalu membeli lagi <b>15 apel</b>. Berapa total apel yang dimiliki Lumi?",
+      teksSoal: "Lumi membawa <b>4 apel</b>, lalu membeli lagi <b>3 apel</b>. Berapa total apel yang dimiliki Lumi?",
       label1: "Apel Lumi",
       label2: "Beli Lagi",
-      val1: 12,
-      val2: 15,
+      val1: 4,
+      val2: 3,
       icon: "fa-apple-whole",
       color: "text-red-500",
-      hint: "Hitung total apel dengan menjumlahkan 12 dan 15.",
-      kunciJawaban: 27
+      hint: "Hitung total apel dengan menjumlahkan 4 dan 3.",
+      kunciJawaban: 7
     },
     {
-      teksSoal: "Di perpustakaan ada <b>20 buku</b> cerita. Pak Guru menambah <b>14 buku</b> baru. Berapa jumlah buku seluruhnya?",
+      teksSoal: "Di perpustakaan ada <b>2 buku</b> cerita. Pak Guru menambah <b>6 buku</b> baru. Berapa jumlah buku seluruhnya?",
       label1: "Buku Awal",
       label2: "Buku Baru",
-      val1: 20,
-      val2: 14,
+      val1: 2,
+      val2: 6,
       icon: "fa-book",
       color: "text-blue-500",
-      hint: "Jumlahkan 20 buku awal dengan 14 buku baru.",
-      kunciJawaban: 34
+      hint: "Jumlahkan 2 buku awal dengan 6 buku baru.",
+      kunciJawaban: 8
     },
     {
-      teksSoal: "Ada <b>15 bintang</b> berwarna kuning dan <b>18 bintang</b> berwarna biru. Berapa total bintang semuanya?",
+      teksSoal: "Ada <b>4 bintang</b> berwarna kuning dan <b>5 bintang</b> berwarna biru. Berapa total bintang semuanya?",
       label1: "Bintang Kuning",
       label2: "Bintang Biru",
-      val1: 15,
-      val2: 18,
+      val1: 4,
+      val2: 5,
       icon: "fa-star",
       color: "text-amber-400",
-      hint: "Gabungkan 15 bintang kuning dan 18 bintang biru.",
-      kunciJawaban: 33
+      hint: "Gabungkan 4 bintang kuning dan 5 bintang biru.",
+      kunciJawaban: 9
     },
     {
-      teksSoal: "Ibu memasak <b>22 kue mangkuk</b>. Ani memasak lagi <b>13 kue mangkuk</b>. Berapa total kue mangkuk sekarang?",
+      teksSoal: "Ibu memasak <b>2 kue mangkuk</b>. Ani memasak lagi <b>4 kue mangkuk</b>. Berapa total kue mangkuk sekarang?",
       label1: "Kue Ibu",
       label2: "Kue Ani",
-      val1: 22,
-      val2: 13,
+      val1: 2,
+      val2: 4,
       icon: "fa-cookie",
       color: "text-orange-500",
-      hint: "Tambahkan 22 kue Ibu dengan 13 kue Ani.",
-      kunciJawaban: 35
+      hint: "Tambahkan 2 kue Ibu dengan 4 kue Ani.",
+      kunciJawaban: 6
     },
     {
-      teksSoal: "Di kolam terdapat <b>16 ikan mas</b> dan <b>19 ikan lele</b>. Berapa ekor total ikan di kolam?",
+      teksSoal: "Di kolam terdapat <b>4 ikan mas</b> dan <b>4 ikan lele</b>. Berapa ekor total ikan di kolam?",
       label1: "Ikan Mas",
       label2: "Ikan Lele",
-      val1: 16,
-      val2: 19,
+      val1: 4,
+      val2: 4,
       icon: "fa-fish",
       color: "text-teal-500",
-      hint: "Jumlahkan 16 ikan mas dan 19 ikan lele.",
-      kunciJawaban: 35
+      hint: "Jumlahkan 4 ikan mas dan 4 ikan lele.",
+      kunciJawaban: 8
     }
   ],
 
@@ -102,14 +102,15 @@ const soalBank = {
       kunciJawaban: 26
     },
     {
-      teksSoal: "Ada <b>50 balon</b> di pesta. Sebanyak <b>18 balon</b> meletus. Berapa sisa balon yang masih utuh?",
-      label1: "Total Balon",
-      label2: "Meletus",
+      // DIGANTI: Dari Balon Meletus menjadi Pita Pesta (fa-ribbon)
+      teksSoal: "Mita memiliki <b>50 buah pita pesta</b>. Sebanyak <b>18 pita</b> digunakan untuk merangkai kado. Berapa sisa pita Mita yang belum dipakai?",
+      label1: "Total Pita",
+      label2: "Dipakai Kado",
       val1: 50,
       val2: 18,
-      icon: "fa-balloon",
+      icon: "fa-ribbon",
       color: "text-rose-500",
-      hint: "Sisa balon = 50 dikurangi 18.",
+      hint: "Sisa pita = 50 dikurangi 18.",
       kunciJawaban: 32
     },
     {
