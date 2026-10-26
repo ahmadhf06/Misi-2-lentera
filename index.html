@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LENTERA - Petualangan Numerasi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-4 md:p-6 text-slate-800 relative select-none">
+
+  <!-- VIRTUAL CURSOR GESTUR -->
+  <div id="virtual-cursor" class="hidden"></div>
+
+  <!-- CUSTOM MODAL POPUP -->
+  <div id="custom-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl border border-slate-100 max-w-md w-full p-6 text-center transform scale-95 transition-all duration-300" id="modal-card">
+      <div id="modal-icon-container" class="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center text-3xl shadow-lg"></div>
+      <h3 id="modal-title" class="text-2xl font-black mb-2 text-slate-800">Judul</h3>
+      <p id="modal-message" class="text-slate-600 text-sm mb-6 leading-relaxed">Pesan...</p>
+      <button id="modal-btn" onclick="closeCustomModal()" class="modal-action-btn w-full py-3.5 rounded-2xl font-bold text-white shadow-lg transition active:scale-95">
+        Lanjutkan
+      </button>
+    </div>
+  </div>
+
+  <!-- VIEW 1: HALAMAN PILIH LEVEL (MENU UTAMA) -->
+  <div id="level-select-screen" class="flex flex-col items-center justify-center flex-grow py-12">
+    <div class="bg-amber-400 text-white px-6 py-3 rounded-2xl text-xl font-bold mb-4 shadow-lg flex items-center gap-3">
+      <i class="fa-solid fa-lightbulb"></i> LENTERA - PILIH MISI LEVEL
+    </div>
+    <p class="text-slate-500 mb-8 text-center max-w-md">Pilih tingkat petualangan numerasimu! Gunakan sensor tangan atau klik untuk memilih.</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl px-4">
+      <!-- Level 1 -->
+      <div onclick="startLevel(1)" class="level-card bg-white border-2 border-teal-200 hover:border-teal-500 p-6 rounded-3xl shadow-sm hover:shadow-xl transition cursor-pointer flex flex-col items-center text-center group">
+        <div class="w-16 h-16 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center text-2xl font-black mb-4 group-hover:scale-110 transition">1</div>
+        <h3 class="text-xl font-bold text-slate-800 mb-2">Level 1</h3>
+        <p class="text-xs text-slate-500 mb-4">Nilai Tempat (5 Soal)</p>
+        <span class="bg-teal-50 text-teal-700 text-xs font-bold px-4 py-2 rounded-xl border border-teal-200 w-full">Mulai Level 1</span>
+      </div>
+
+      <!-- Level 2 -->
+      <div onclick="startLevel(2)" class="level-card bg-white border-2 border-amber-200 hover:border-amber-500 p-6 rounded-3xl shadow-sm hover:shadow-xl transition cursor-pointer flex flex-col items-center text-center group">
+        <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl font-black mb-4 group-hover:scale-110 transition">2</div>
+        <h3 class="text-xl font-bold text-slate-800 mb-2">Level 2</h3>
+        <p class="text-xs text-slate-500 mb-4">Pengurangan Seru (5 Soal)</p>
+        <span class="bg-amber-50 text-amber-700 text-xs font-bold px-4 py-2 rounded-xl border border-amber-200 w-full">Mulai Level 2</span>
+      </div>
+
+      <!-- Level 3 -->
+      <div onclick="startLevel(3)" class="level-card bg-white border-2 border-purple-200 hover:border-purple-500 p-6 rounded-3xl shadow-sm hover:shadow-xl transition cursor-pointer flex flex-col items-center text-center group">
+        <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl font-black mb-4 group-hover:scale-110 transition">3</div>
+        <h3 class="text-xl font-bold text-slate-800 mb-2">Level 3</h3>
+        <p class="text-xs text-slate-500 mb-4">Kombinasi ± (5 Soal)</p>
+        <span class="bg-purple-50 text-purple-700 text-xs font-bold px-4 py-2 rounded-xl border border-purple-200 w-full">Mulai Level 3</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW 2: HALAMAN GAME UTAMA -->
+  <div id="game-screen" class="hidden flex-col flex-grow justify-between">
+    <!-- TOP BAR -->
+    <header class="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm mb-4">
+      <div class="flex items-center space-x-3">
+        <button onclick="backToMenu()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-xs font-bold transition">
+          <i class="fa-solid fa-arrow-left"></i> Menu
+        </button>
+        <span class="bg-teal-100 text-teal-800 text-xs font-semibold px-3 py-1 rounded-full" id="header-badge">
+          Level 1 · Nilai Tempat
+        </span>
+      </div>
+
+      <div class="flex items-center space-x-6">
+        <div class="text-sm font-medium text-slate-500">
+          Soal <span id="soal-index" class="text-slate-800 font-bold">1</span> / <span id="total-soal">5</span>
+        </div>
+        <div class="w-32 bg-slate-200 h-2.5 rounded-full overflow-hidden">
+          <div id="progress-bar" class="bg-teal-500 h-2.5 rounded-full" style="width: 20%"></div>
+        </div>
+        <span class="bg-teal-50 text-teal-700 text-xs font-bold px-3 py-1 rounded-lg border border-teal-200" id="level-tag">
+          Level 1
+        </span>
+      </div>
+    </header>
+
+    <!-- MAIN GAME CONTAINER -->
+    <main class="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-grow">
+      <!-- LEFT PANEL: SOAL & VISUALISASI GAMBAR -->
+      <section class="lg:col-span-7 flex flex-col gap-4">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+          <span class="text-xs font-bold tracking-wider text-slate-400 uppercase">Soal Cerita Interaktif</span>
+          <h2 id="teks-soal" class="text-xl md:text-2xl font-bold mt-1 text-slate-800 leading-snug">
+            Loading soal...
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 flex-grow min-h-[260px]">
+          <!-- Area Visual 1 -->
+          <div class="bg-teal-50/50 border-2 border-dashed border-teal-200 rounded-2xl p-4 flex flex-col items-center justify-between">
+            <span id="label-box-1" class="text-xs font-bold text-teal-800 uppercase tracking-widest">PULUHAN</span>
+            <div id="container-visual-1" class="flex flex-wrap gap-2 items-center justify-center h-40 overflow-y-auto p-2"></div>
+            <span id="label-val-1" class="text-2xl font-black teal-brand">0</span>
+          </div>
+
+          <!-- Area Visual 2 -->
+          <div class="bg-teal-50/50 border-2 border-dashed border-teal-200 rounded-2xl p-4 flex flex-col items-center justify-between">
+            <span id="label-box-2" class="text-xs font-bold text-teal-800 uppercase tracking-widest">SATUAN</span>
+            <div id="container-visual-2" class="flex flex-wrap gap-2 items-center justify-center h-40 overflow-y-auto p-2"></div>
+            <span id="label-val-2" class="text-2xl font-black teal-brand">0</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT PANEL: JAWABAN & KEYPAD -->
+      <section class="lg:col-span-5 flex flex-col justify-between gap-4">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center flex-grow">
+          <span class="text-xs font-bold text-slate-400 tracking-wider uppercase mb-3">JAWABANMU</span>
+
+          <div id="slot-jawaban-wrapper" class="w-full flex justify-center">
+            <!-- Slot jawaban akan di-render secara dinamis oleh JS -->
+            <div id="slot-jawaban"></div>
+          </div>
+
+          <p class="text-xs text-slate-400 mb-4 text-center">Tunjuk angka dengan jari telunjuk (tahan 1 detik) atau klik tombol.</p>
+          <div id="keypad" class="grid grid-cols-5 gap-2 w-full max-w-sm"></div>
+        </div>
+
+        <!-- Mascot Guidance (Lumi) -->
+        <div class="bg-amber-50 border border-amber-200 p-4 rounded-2xl flex items-start gap-3">
+          <div class="bg-amber-400 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">
+            💡
+          </div>
+          <div>
+            <p id="lumi-hint" class="text-xs md:text-sm text-amber-900 font-medium">
+              <span class="font-bold">Lumi:</span> Loading petunjuk...
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- WEBCAM & GESTURE SENSOR OVERLAY -->
+  <div class="fixed bottom-4 right-4 bg-slate-900 text-white p-2 rounded-xl shadow-2xl w-48 border border-purple-500/30 z-40">
+    <div class="flex justify-between items-center mb-1 px-1">
+      <span class="text-[10px] font-bold text-purple-400 flex items-center gap-1">
+        <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse" id="cam-indicator"></span> Touchless Active
+      </span>
+      <i class="fa-solid fa-hand text-xs text-slate-400"></i>
+    </div>
+    <div class="relative w-full h-28 bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800">
+      <video id="webcam-video" class="hidden" autoplay playsinline muted></video>
+      <canvas id="gesture-canvas" class="w-full h-full object-cover"></canvas>
+      <div id="gesture-status" class="absolute bottom-1 left-1 bg-purple-950/80 px-1.5 py-0.5 rounded text-[9px] text-purple-300 border border-purple-800/50">
+        • Memindai Tangan...
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT FILES SINKRON -->
+  <script src="js/soal_config.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/game_engine.js"></script>
+  <script src="js/gesture_sensor.js"></script>
+</body>
+</html>
