@@ -2,6 +2,10 @@ const urlParams = new URLSearchParams(window.location.search);
 const ssoToken = urlParams.get('ssoToken') || "DEMO_TOKEN_123";
 const API_EVENT_URL = "/api/game/event/";
 
+// Helper: ambil gambar berwarna dari Twemoji berdasarkan kode emoji
+const twemoji = (kode) =>
+  `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/${kode}.svg`;
+
 // ==========================================
 // BANK SOAL LENTERA (LEVEL 1 - 4)
 // ==========================================
@@ -16,6 +20,7 @@ const soalBank = {
       val1: 4,
       val2: 3,
       icon: "fa-apple-whole",
+      gambar: twemoji("1f34e"),
       color: "text-red-500",
       hint: "Hitung total apel dengan menjumlahkan 4 dan 3.",
       kunciJawaban: 7
@@ -27,6 +32,7 @@ const soalBank = {
       val1: 2,
       val2: 6,
       icon: "fa-book",
+      gambar: twemoji("1f4da"),
       color: "text-blue-500",
       hint: "Jumlahkan 2 buku awal dengan 6 buku baru.",
       kunciJawaban: 8
@@ -38,6 +44,7 @@ const soalBank = {
       val1: 4,
       val2: 5,
       icon: "fa-star",
+      gambar: twemoji("2b50"),
       color: "text-amber-400",
       hint: "Gabungkan 4 bintang kuning dan 5 bintang biru.",
       kunciJawaban: 9
@@ -49,6 +56,7 @@ const soalBank = {
       val1: 2,
       val2: 4,
       icon: "fa-cookie",
+      gambar: twemoji("1f9c1"),
       color: "text-orange-500",
       hint: "Tambahkan 2 kue Ibu dengan 4 kue Ani.",
       kunciJawaban: 6
@@ -60,6 +68,7 @@ const soalBank = {
       val1: 4,
       val2: 4,
       icon: "fa-fish",
+      gambar: twemoji("1f41f"),
       color: "text-teal-500",
       hint: "Jumlahkan 4 ikan mas dan 4 ikan lele.",
       kunciJawaban: 8
@@ -75,6 +84,7 @@ const soalBank = {
       val1: 35,
       val2: 12,
       icon: "fa-circle",
+      gambar: twemoji("1f535"),
       color: "text-emerald-500",
       hint: "Kurangi 35 kelereng awal dengan 12 kelereng yang diberikan.",
       kunciJawaban: 23
@@ -86,6 +96,7 @@ const soalBank = {
       val1: 48,
       val2: 15,
       icon: "fa-pencil",
+      gambar: twemoji("270f"),
       color: "text-purple-500",
       hint: "Hitung sisa dengan mengurangi 48 pensil dengan 15 pensil terjual.",
       kunciJawaban: 33
@@ -97,6 +108,7 @@ const soalBank = {
       val1: 40,
       val2: 14,
       icon: "fa-lemon",
+      gambar: twemoji("1f34a"),
       color: "text-yellow-500",
       hint: "Kurangkan 14 jeruk busuk dari 40 total jeruk.",
       kunciJawaban: 26
@@ -109,6 +121,7 @@ const soalBank = {
       val1: 50,
       val2: 18,
       icon: "fa-ribbon",
+      gambar: twemoji("1f380"),
       color: "text-rose-500",
       hint: "Sisa pita = 50 dikurangi 18.",
       kunciJawaban: 32
@@ -120,6 +133,7 @@ const soalBank = {
       val1: 45,
       val2: 17,
       icon: "fa-cookie-bite",
+      gambar: twemoji("1f36a"),
       color: "text-amber-600",
       hint: "Hitung 45 dikurangi 17.",
       kunciJawaban: 28
@@ -135,6 +149,7 @@ const soalBank = {
       val1: 40,
       val2: 10,
       icon: "fa-note-sticky",
+      gambar: twemoji("1f31f"),
       color: "text-indigo-500",
       hint: "Hitung (25 + 15) dulu = 40, lalu kurangi 10.",
       kunciJawaban: 30
@@ -146,6 +161,7 @@ const soalBank = {
       val1: 42,
       val2: 15,
       icon: "fa-bus",
+      gambar: twemoji("1f68c"),
       color: "text-sky-500",
       hint: "Hitung (30 + 12) = 42, kemudian kurangi 15.",
       kunciJawaban: 27
@@ -157,6 +173,7 @@ const soalBank = {
       val1: 55,
       val2: 18,
       icon: "fa-bottle-water",
+      gambar: twemoji("1f964"),
       color: "text-cyan-500",
       hint: "Hitung (35 + 20) = 55, lalu kurangi 18.",
       kunciJawaban: 37
@@ -168,6 +185,7 @@ const soalBank = {
       val1: 50,
       val2: 14,
       icon: "fa-leaf",
+      gambar: twemoji("1f343"),
       color: "text-green-500",
       hint: "Hitung (28 + 22) = 50, lalu kurangkan dengan 14.",
       kunciJawaban: 36
@@ -179,6 +197,7 @@ const soalBank = {
       val1: 55,
       val2: 21,
       icon: "fa-bread-slice",
+      gambar: twemoji("1f35e"),
       color: "text-amber-700",
       hint: "Hitung (40 + 15) = 55, lalu kurangi 21.",
       kunciJawaban: 34
@@ -194,6 +213,7 @@ const soalBank = {
       val1: 24,
       val2: 8,
       icon: "fa-circle-dot",
+      gambar: twemoji("1f369"),
       color: "text-pink-500",
       hint: "Hitung total seluruh donat dulu (4 kotak × 6 = 24), lalu kurangi 8 donat yang diberikan kepada tetangga.",
       kunciJawaban: 16
@@ -205,6 +225,7 @@ const soalBank = {
       val1: 60,
       val2: 5,
       icon: "fa-basket-shopping",
+      gambar: twemoji("1f330"),
       color: "text-emerald-600",
       hint: "Jumlahkan dulu seluruh salak di keranjang (45 + 15 = 60), lalu bagi hasilnya dengan jumlah kantong plastik (60 ÷ 5).",
       kunciJawaban: 12
@@ -216,6 +237,7 @@ const soalBank = {
       val1: 36,
       val2: 11,
       icon: "fa-apple-whole",
+      gambar: twemoji("1f34e"),
       color: "text-red-600",
       hint: "Hitung total apel panen (3 kantong × 12 = 36), lalu kurangi 11 apel yang dibagikan.",
       kunciJawaban: 25
@@ -227,6 +249,7 @@ const soalBank = {
       val1: 40,
       val2: 15,
       icon: "fa-candy-cane",
+      gambar: twemoji("1f36c"),
       color: "text-violet-500",
       hint: "Hitung dulu permen dari bungkus (5 × 8 = 40), lalu tambahkan dengan 15 permen eceran.",
       kunciJawaban: 55
@@ -238,6 +261,7 @@ const soalBank = {
       val1: 60,
       val2: 18,
       icon: "fa-book-open",
+      gambar: twemoji("1f4da"),
       color: "text-indigo-600",
       hint: "Hitung dulu total buku dalam dus (6 × 10 = 60), lalu kurangi dengan 18 buku yang disumbangkan.",
       kunciJawaban: 42

@@ -82,8 +82,8 @@ function loadQuestion() {
   if (labelVal1) labelVal1.innerText = q.val1;
   if (labelVal2) labelVal2.innerText = q.val2;
 
-  renderVisualObjects('container-visual-1', q.val1, q.icon || 'fa-star', q.color || 'text-teal-500');
-  renderVisualObjects('container-visual-2', q.val2, q.icon || 'fa-star', q.color || 'text-teal-500');
+  renderVisualObjects('container-visual-1', q.val1, q);
+  renderVisualObjects('container-visual-2', q.val2, q);
 
   const lumiHint = document.getElementById('lumi-hint');
   if (lumiHint) {
@@ -94,17 +94,34 @@ function loadQuestion() {
   renderKeypad();
 }
 
-// Render ikon visual objek bantu hitung secara detail
-function renderVisualObjects(containerId, count, iconClass, colorClass) {
+// Render objek bantu hitung: pakai gambar, kalau gagal pakai ikon Font Awesome
+function renderVisualObjects(containerId, count, q) {
   const container = document.getElementById(containerId);
   if (!container) return;
   container.innerHTML = "";
 
   const renderCount = Math.min(count, 40);
   for (let i = 0; i < renderCount; i++) {
-    const icon = document.createElement('i');
-    icon.className = `fa-solid ${iconClass} ${colorClass} text-lg transition-transform hover:scale-125 m-0.5`;
-    container.appendChild(icon);
+    let el;
+
+    if (q.gambar) {
+      el = document.createElement('img');
+      el.src = q.gambar;
+      el.alt = q.label1 || 'objek';
+      el.className = 'item-gambar';
+      el.style.animationDelay = `${i * 30}ms`;
+      // Cadangan: kalau gambar gagal dimuat, ganti ke ikon lama
+      el.onerror = () => {
+        const fallback = document.createElement('i');
+        fallback.className = `fa-solid ${q.icon || 'fa-star'} ${q.color || 'text-teal-500'} text-lg m-0.5`;
+        el.replaceWith(fallback);
+      };
+    } else {
+      el = document.createElement('i');
+      el.className = `fa-solid ${q.icon || 'fa-star'} ${q.color || 'text-teal-500'} text-lg transition-transform hover:scale-125 m-0.5`;
+    }
+
+    container.appendChild(el);
   }
 }
 

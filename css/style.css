@@ -29,3 +29,23 @@ body {
   transition: transform 0.05s linear;
   box-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
 }
+
+/* Gambar objek bantu hitung */
+.item-gambar {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  margin: 2px;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.18));
+  animation: pop-in 0.3s ease both;
+  transition: transform 0.2s;
+}
+
+.item-gambar:hover {
+  transform: scale(1.3) rotate(-6deg);
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.3); }
+  to   { opacity: 1; transform: scale(1); }
+}
