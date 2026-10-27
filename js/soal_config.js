@@ -266,5 +266,69 @@ const soalBank = {
       hint: "Hitung dulu total buku dalam dus (6 × 10 = 60), lalu kurangi dengan 18 buku yang disumbangkan.",
       kunciJawaban: 42
     }
+  ],
+
+  // LEVEL 5: Cerita Kompleks 3 Langkah (kali, tambah/kurang, bagi) - jawaban bisa 3 digit
+  5: [
+    {
+      teksSoal: "Perpustakaan sekolah punya <b>7 rak</b>. Setiap rak berisi <b>15 buku</b>. Minggu ini sekolah menerima sumbangan <b>48 buku</b> baru. Berapa total buku di perpustakaan sekarang?",
+      label1: "Buku di Rak",
+      label2: "Buku Sumbangan",
+      val1: 105,
+      val2: 48,
+      icon: "fa-book",
+      gambar: twemoji("1f4da"),
+      color: "text-blue-600",
+      hint: "Hitung buku di rak dulu (7 × 15 = 105), lalu tambahkan 48 buku sumbangan.",
+      kunciJawaban: 153
+    },
+    {
+      teksSoal: "Pak Tani memanen <b>9 keranjang</b> mangga. Setiap keranjang berisi <b>16 mangga</b>. Ia membeli lagi <b>56 mangga</b> dari tetangga. Semua mangga dibagi sama rata ke <b>8 kotak</b>. Berapa mangga di setiap kotak?",
+      label1: "Total Mangga",
+      label2: "Jumlah Kotak",
+      val1: 200,
+      val2: 8,
+      icon: "fa-apple-whole",
+      gambar: twemoji("1f96d"),
+      color: "text-orange-500",
+      hint: "Langkah 1: 9 × 16 = 144. Langkah 2: 144 + 56 = 200. Langkah 3: 200 ÷ 8.",
+      kunciJawaban: 25
+    },
+    {
+      teksSoal: "Dina punya <b>250 manik-manik</b>. Ia membuat <b>8 gelang</b>, dan setiap gelang memakai <b>15 manik-manik</b>. Berapa sisa manik-manik Dina?",
+      label1: "Manik Awal",
+      label2: "Manik Terpakai",
+      val1: 250,
+      val2: 120,
+      icon: "fa-circle",
+      gambar: twemoji("1f4ff"),
+      color: "text-pink-500",
+      hint: "Hitung manik yang terpakai dulu (8 × 15 = 120), lalu kurangkan dari 250.",
+      kunciJawaban: 130
+    },
+    {
+      teksSoal: "Panitia menyiapkan <b>6 kotak</b> nasi. Setiap kotak berisi <b>24 bungkus</b>. Lalu datang tambahan <b>36 bungkus</b>. Semua nasi dibagikan sama rata ke <b>9 kelas</b>. Berapa bungkus nasi yang diterima tiap kelas?",
+      label1: "Total Nasi",
+      label2: "Jumlah Kelas",
+      val1: 180,
+      val2: 9,
+      icon: "fa-box",
+      gambar: twemoji("1f371"),
+      color: "text-amber-600",
+      hint: "Langkah 1: 6 × 24 = 144. Langkah 2: 144 + 36 = 180. Langkah 3: 180 ÷ 9.",
+      kunciJawaban: 20
+    },
+    {
+      teksSoal: "Sebuah toko buku punya <b>25 rak</b> berisi masing-masing <b>12 buku</b>. Sebanyak <b>87 buku</b> terjual, lalu <b>34 buku</b> dikembalikan pembeli. Berapa buku di toko sekarang?",
+      label1: "Buku Setelah Terjual",
+      label2: "Buku Dikembalikan",
+      val1: 213,
+      val2: 34,
+      icon: "fa-book-open",
+      gambar: twemoji("1f4d6"),
+      color: "text-indigo-600",
+      hint: "Langkah 1: 25 × 12 = 300. Langkah 2: 300 − 87 = 213. Langkah 3: 213 + 34.",
+      kunciJawaban: 247
+    }
   ]
 };

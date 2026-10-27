@@ -37,8 +37,8 @@
     <p class="text-slate-600 text-lg">Pilih level petualanganmu atau gunakan sensor tangan!</p>
   </div>
 
-  <!-- Grid Pilihan Level 1 sampai 4 -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl w-full">
+  <!-- Grid Pilihan Level 1 sampai 5 -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl w-full">
     
     <!-- Level 1 -->
     <div onclick="startLevel(1)" class="level-card bg-white p-6 rounded-3xl shadow-lg border-2 border-teal-100 hover:border-teal-500 transition cursor-pointer flex flex-col items-center text-center">
@@ -61,11 +61,18 @@
       <p class="text-slate-500 text-sm">Kombinasi Penjumlahan & Pengurangan</p>
     </div>
 
-    <!-- Level 4 (BARU) -->
+    <!-- Level 4 -->
     <div onclick="startLevel(4)" class="level-card bg-white p-6 rounded-3xl shadow-lg border-2 border-rose-100 hover:border-rose-500 transition cursor-pointer flex flex-col items-center text-center">
       <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center text-2xl mb-4 font-bold">4</div>
       <h3 class="text-xl font-bold text-slate-800 mb-1">Level 4</h3>
       <p class="text-slate-500 text-sm">Hitung Campuran & Cerita Kompleks</p>
+    </div>
+
+    <!-- Level 5 (BARU) -->
+    <div onclick="startLevel(5)" class="level-card bg-white p-6 rounded-3xl shadow-lg border-2 border-sky-100 hover:border-sky-500 transition cursor-pointer flex flex-col items-center text-center">
+      <div class="w-16 h-16 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center text-2xl mb-4 font-bold">5</div>
+      <h3 class="text-xl font-bold text-slate-800 mb-1">Level 5</h3>
+      <p class="text-slate-500 text-sm">Cerita 3 Langkah & Bilangan Besar</p>
     </div>
 
   </div>
@@ -85,6 +92,9 @@
       </div>
 
       <div class="flex items-center space-x-6">
+        <span class="bg-amber-50 text-amber-700 text-xs font-bold px-3 py-1 rounded-lg border border-amber-200">
+          ⭐ Poin: <span id="skor-nilai" class="text-sm font-black transition-colors">100</span>
+        </span>
         <div class="text-sm font-medium text-slate-500">
           Soal <span id="soal-index" class="text-slate-800 font-bold">1</span> / <span id="total-soal">5</span>
         </div>
@@ -135,8 +145,18 @@
             <div id="slot-jawaban"></div>
           </div>
 
-          <p class="text-xs text-slate-400 mb-4 text-center">Tunjuk angka dengan jari telunjuk (tahan 1 detik) atau klik tombol.</p>
+          <p class="text-xs text-slate-400 mb-4 text-center">Tunjuk angka dengan jari telunjuk (tahan 1 detik) atau klik tombol, lalu tekan Periksa. Salah menjawab = poin −5.</p>
           <div id="keypad" class="grid grid-cols-5 gap-2 w-full max-w-sm"></div>
+
+          <!-- Tombol Hapus & Periksa -->
+          <div class="grid grid-cols-2 gap-3 w-full max-w-sm mt-3">
+            <button id="btn-hapus" type="button" onclick="hapusAngka()" class="py-3.5 bg-rose-50 hover:bg-rose-100 text-rose-600 border-2 border-rose-200 font-extrabold text-base rounded-2xl transition shadow-sm active:scale-95 flex items-center justify-center gap-2 cursor-pointer">
+              <i class="fa-solid fa-delete-left"></i> Hapus
+            </button>
+            <button id="btn-periksa" type="button" onclick="periksaJawaban()" class="py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-extrabold text-base rounded-2xl transition shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer">
+              <i class="fa-solid fa-circle-check"></i> Periksa
+            </button>
+          </div>
         </div>
 
         <!-- Mascot Guidance (Lumi) -->
