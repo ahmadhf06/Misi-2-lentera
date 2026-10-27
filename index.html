@@ -145,7 +145,7 @@
             <div id="slot-jawaban"></div>
           </div>
 
-          <p class="text-xs text-slate-400 mb-4 text-center">Tunjuk angka dengan jari telunjuk (tahan 1 detik) atau klik tombol, lalu tekan Periksa. Salah menjawab = poin −5.</p>
+          <p class="text-xs text-slate-400 mb-4 text-center">Arahkan telunjuk ke angka, lalu kepalkan tangan untuk memilih (atau klik tombol), kemudian tekan Periksa. Salah menjawab = poin −5.</p>
           <div id="keypad" class="grid grid-cols-5 gap-2 w-full max-w-sm"></div>
 
           <!-- Tombol Hapus & Periksa -->
@@ -175,12 +175,12 @@
   </div>
 
   <!-- WEBCAM & GESTURE SENSOR OVERLAY -->
-  <div class="fixed bottom-4 right-4 bg-slate-900 text-white p-2 rounded-xl shadow-2xl w-48 border border-purple-500/30 z-40">
-    <div class="flex justify-between items-center mb-1 px-1">
+  <div id="cam-box" class="fixed bottom-4 right-4 bg-slate-900 text-white p-2 rounded-xl shadow-2xl w-48 border border-purple-500/30 z-40">
+    <div id="cam-handle" title="Tahan dan geser untuk memindahkan kamera" style="touch-action: none;" class="flex justify-between items-center mb-1 px-1 cursor-grab select-none">
       <span class="text-[10px] font-bold text-purple-400 flex items-center gap-1">
         <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse" id="cam-indicator"></span> Touchless Active
       </span>
-      <i class="fa-solid fa-hand text-xs text-slate-400"></i>
+      <i class="fa-solid fa-grip text-xs text-slate-400" title="Geser"></i>
     </div>
     <div class="relative w-full h-28 bg-slate-950 rounded-lg overflow-hidden flex items-center justify-center border border-slate-800">
       <video id="webcam-video" class="hidden" autoplay playsinline muted></video>
@@ -190,6 +190,71 @@
       </div>
     </div>
   </div>
+
+  <!-- GESER KOTAK KAMERA -->
+  <script>
+    (function () {
+      const box = document.getElementById('cam-box');
+      const handle = document.getElementById('cam-handle');
+      if (!box || !handle) return;
+
+      const KUNCI = 'lentera-posisi-kamera';
+      let dragging = false, offX = 0, offY = 0;
+
+      // Atur posisi, dibatasi agar kotak tidak keluar layar
+      function setPos(x, y) {
+        const maxX = Math.max(0, window.innerWidth - box.offsetWidth);
+        const maxY = Math.max(0, window.innerHeight - box.offsetHeight);
+        box.style.left = Math.min(Math.max(0, x), maxX) + 'px';
+        box.style.top = Math.min(Math.max(0, y), maxY) + 'px';
+        box.style.right = 'auto';
+        box.style.bottom = 'auto';
+      }
+
+      // Pulihkan posisi terakhir (jika ada)
+      try {
+        const simpan = JSON.parse(localStorage.getItem(KUNCI) || 'null');
+        if (simpan && typeof simpan.x === 'number') setPos(simpan.x, simpan.y);
+      } catch (e) {}
+
+      handle.addEventListener('pointerdown', function (e) {
+        dragging = true;
+        const r = box.getBoundingClientRect();
+        offX = e.clientX - r.left;
+        offY = e.clientY - r.top;
+        try { handle.setPointerCapture(e.pointerId); } catch (err) {}
+        handle.classList.remove('cursor-grab');
+        handle.classList.add('cursor-grabbing');
+        e.preventDefault();
+      });
+
+      handle.addEventListener('pointermove', function (e) {
+        if (!dragging) return;
+        setPos(e.clientX - offX, e.clientY - offY);
+      });
+
+      function selesai() {
+        if (!dragging) return;
+        dragging = false;
+        handle.classList.remove('cursor-grabbing');
+        handle.classList.add('cursor-grab');
+        try {
+          const r = box.getBoundingClientRect();
+          localStorage.setItem(KUNCI, JSON.stringify({ x: r.left, y: r.top }));
+        } catch (e) {}
+      }
+      handle.addEventListener('pointerup', selesai);
+      handle.addEventListener('pointercancel', selesai);
+
+      // Jika ukuran jendela berubah, pastikan kotak tetap terlihat
+      window.addEventListener('resize', function () {
+        if (box.style.left) {
+          const r = box.getBoundingClientRect();
+          setPos(r.left, r.top);
+        }
+      });
+    })();
+  </script>
 
   <!-- SCRIPT FILES SINKRON -->
   <script src="js/soal_config.js"></script>
