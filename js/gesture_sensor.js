@@ -13,7 +13,13 @@ const RASIO_TEKUK = 1.15;   // rasio jari <= ini dianggap TERTEKUK (naikkan jika
 const FRAME_KEPAL = 3;      // berapa frame berturut-turut kepalan harus terdeteksi sebelum klik
 const FRAME_LEPAS = 3;      // berapa frame telunjuk harus lurus lagi sebelum boleh klik berikutnya
 const JEDA_KLIK_MS = 700;   // jeda minimal antar klik (ms)
-const KEHALUSAN = 0.5;      // 0-1, makin kecil makin halus tapi makin lambat mengikuti jari
+
+// Kehalusan gerak kursor (adaptif: halus saat pelan, cepat saat digerakkan cepat)
+const ALPHA_LAMBAT = 0.15;   // 0-1 | tingkat "licin" saat jari bergerak pelan/diam (kecil = lebih stabil)
+const ALPHA_CEPAT = 0.65;    // 0-1 | respons saat jari bergerak cepat (besar = lebih responsif)
+const JARAK_CEPAT_PX = 120;  // gerakan sejauh ini per frame dianggap "cepat"
+const ZONA_MATI_PX = 4;      // getaran lebih kecil dari ini diabaikan (kursor diam)
+const MARGIN_KAMERA = 0.1;   // 0-0.3 | bagian pinggir kamera yang dipotong agar tepi layar mudah dijangkau (0 = matikan)
 const DEBUG_GESTUR = false; // true = tampilkan angka rasio jari di label kamera (untuk penyetelan)
 
 // ---------- STATE ----------
@@ -100,9 +106,45 @@ function bacaPosisiTangan(lm) {
   };
 }
 
+// Petakan posisi kamera (0-1) ke layar (0-1) dengan memotong margin pinggir kamera
+function petakan(nilai) {
+  const m = MARGIN_KAMERA;
+  return Math.min(1, Math.max(0, (nilai - m) / (1 - 2 * m)));
+}
+
+// Penghalusan adaptif: pelan = sangat stabil, cepat = tetap responsif
+function haluskanKursor(targetX, targetY) {
+  if (kursorX === null) {
+    kursorX = targetX;
+    kursorY = targetY;
+    return;
+  }
+
+  const dx = targetX - kursorX;
+  const dy = targetY - kursorY;
+  const jarakPx = Math.hypot(dx, dy);
+
+  if (jarakPx < ZONA_MATI_PX) return; // getaran kecil diabaikan
+
+  const t = Math.min(1, jarakPx / JARAK_CEPAT_PX);
+  const alpha = ALPHA_LAMBAT + (ALPHA_CEPAT - ALPHA_LAMBAT) * t;
+
+  kursorX += dx * alpha;
+  kursorY += dy * alpha;
+}
+
 // ---------- HANDLER DETEKSI TANGAN ----------
 function onHandResults(results) {
   if (!canvasCtx || !canvasElement) return;
+
+  // Samakan ukuran kanvas dengan ukuran asli kamera agar gambar tidak gepeng
+  const lebarAsli = results.image.videoWidth || results.image.width;
+  const tinggiAsli = results.image.videoHeight || results.image.height;
+  if (lebarAsli && tinggiAsli &&
+      (canvasElement.width !== lebarAsli || canvasElement.height !== tinggiAsli)) {
+    canvasElement.width = lebarAsli;
+    canvasElement.height = tinggiAsli;
+  }
 
   canvasCtx.save();
   canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
@@ -124,16 +166,10 @@ function onHandResults(results) {
     //    supaya klik tidak meleset ke tempat lain.
     if (posisi.telunjukLurus) {
       const tip = landmarks[8];
-      const targetX = (1 - tip.x) * window.innerWidth;
-      const targetY = tip.y * window.innerHeight;
+      const targetX = petakan(1 - tip.x) * window.innerWidth;
+      const targetY = petakan(tip.y) * window.innerHeight;
 
-      if (kursorX === null) {
-        kursorX = targetX;
-        kursorY = targetY;
-      } else {
-        kursorX += (targetX - kursorX) * KEHALUSAN;
-        kursorY += (targetY - kursorY) * KEHALUSAN;
-      }
+      haluskanKursor(targetX, targetY);
 
       updateVirtualCursor(kursorX, kursorY);
       processCursorHover(kursorX, kursorY);
