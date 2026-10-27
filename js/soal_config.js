@@ -7,11 +7,11 @@ const twemoji = (kode) =>
   `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/${kode}.svg`;
 
 // ==========================================
-// BANK SOAL LENTERA (LEVEL 1 - 4)
+// BANK SOAL LENTERA (LEVEL 1 - 5)
 // ==========================================
 
 const soalBank = {
-  // LEVEL 1: Nilai Tempat & Penjumlahan Dasar
+  // LEVEL 1: Nilai Tempat & Penjumlahan Dasar (satuan, hasil 1-9)
   1: [
     {
       teksSoal: "Lumi membawa <b>4 apel</b>, lalu membeli lagi <b>3 apel</b>. Berapa total apel yang dimiliki Lumi?",
@@ -75,200 +75,200 @@ const soalBank = {
     }
   ],
 
-  // LEVEL 2: Pengurangan & Kontekstual
+  // LEVEL 2: Pengurangan & Kontekstual (hasil 10-25)
   2: [
     {
-      teksSoal: "Siti memiliki <b>35 kelereng</b>. Dia memberikan <b>12 kelereng</b> kepada adiknya. Berapa sisa kelereng Siti?",
+      teksSoal: "Siti memiliki <b>32 kelereng</b>. Dia memberikan <b>13 kelereng</b> kepada adiknya. Berapa sisa kelereng Siti?",
       label1: "Kelereng Awal",
       label2: "Diberikan",
-      val1: 35,
-      val2: 12,
+      val1: 32,
+      val2: 13,
       icon: "fa-circle",
       gambar: twemoji("1f535"),
       color: "text-emerald-500",
-      hint: "Kurangi 35 kelereng awal dengan 12 kelereng yang diberikan.",
-      kunciJawaban: 23
+      hint: "Kurangi 32 kelereng awal dengan 13 kelereng yang diberikan.",
+      kunciJawaban: 19
     },
     {
-      teksSoal: "Di toko ada <b>48 pensil</b>. Sebanyak <b>15 pensil</b> telah terjual. Berapa pensil yang tersisa?",
+      teksSoal: "Di toko ada <b>40 pensil</b>. Sebanyak <b>15 pensil</b> telah terjual. Berapa pensil yang tersisa?",
       label1: "Pensil Toko",
       label2: "Terjual",
-      val1: 48,
+      val1: 40,
       val2: 15,
       icon: "fa-pencil",
       gambar: twemoji("270f"),
       color: "text-purple-500",
-      hint: "Hitung sisa dengan mengurangi 48 pensil dengan 15 pensil terjual.",
-      kunciJawaban: 33
+      hint: "Hitung sisa dengan mengurangi 40 pensil dengan 15 pensil terjual.",
+      kunciJawaban: 25
     },
     {
-      teksSoal: "Paman memetik <b>40 buah jeruk</b>. Ternyata ada <b>14 jeruk</b> yang busuk. Berapa jeruk yang masih bagus?",
+      teksSoal: "Paman memetik <b>30 buah jeruk</b>. Ternyata ada <b>14 jeruk</b> yang busuk. Berapa jeruk yang masih bagus?",
       label1: "Total Jeruk",
       label2: "Jeruk Busuk",
-      val1: 40,
+      val1: 30,
       val2: 14,
       icon: "fa-lemon",
       gambar: twemoji("1f34a"),
       color: "text-yellow-500",
-      hint: "Kurangkan 14 jeruk busuk dari 40 total jeruk.",
-      kunciJawaban: 26
+      hint: "Kurangkan 14 jeruk busuk dari 30 total jeruk.",
+      kunciJawaban: 16
     },
     {
       // DIGANTI: Dari Balon Meletus menjadi Pita Pesta (fa-ribbon)
-      teksSoal: "Mita memiliki <b>50 buah pita pesta</b>. Sebanyak <b>18 pita</b> digunakan untuk merangkai kado. Berapa sisa pita Mita yang belum dipakai?",
+      teksSoal: "Mita memiliki <b>35 buah pita pesta</b>. Sebanyak <b>12 pita</b> digunakan untuk merangkai kado. Berapa sisa pita Mita yang belum dipakai?",
       label1: "Total Pita",
       label2: "Dipakai Kado",
-      val1: 50,
-      val2: 18,
+      val1: 35,
+      val2: 12,
       icon: "fa-ribbon",
       gambar: twemoji("1f380"),
       color: "text-rose-500",
-      hint: "Sisa pita = 50 dikurangi 18.",
-      kunciJawaban: 32
+      hint: "Sisa pita = 35 dikurangi 12.",
+      kunciJawaban: 23
     },
     {
-      teksSoal: "Eko membawa <b>45 keping biskuit</b>. Dia makan <b>17 biskuit</b> bersama temannya. Berapa sisa biskuit Eko?",
+      teksSoal: "Eko membawa <b>29 keping biskuit</b>. Dia makan <b>17 biskuit</b> bersama temannya. Berapa sisa biskuit Eko?",
       label1: "Biskuit Eko",
       label2: "Dimakan",
-      val1: 45,
+      val1: 29,
       val2: 17,
       icon: "fa-cookie-bite",
       gambar: twemoji("1f36a"),
       color: "text-amber-600",
-      hint: "Hitung 45 dikurangi 17.",
-      kunciJawaban: 28
+      hint: "Hitung 29 dikurangi 17.",
+      kunciJawaban: 12
     }
   ],
 
-  // LEVEL 3: Operasi Campuran Penjumlahan & Pengurangan
+  // LEVEL 3: Operasi Campuran Penjumlahan & Pengurangan (hasil 30-55)
   3: [
     {
-      teksSoal: "Dini punya <b>25 stiker</b>, membeli lagi <b>15 stiker</b>, lalu memberikan <b>10 stiker</b> ke adiknya. Berapa stiker Dini sekarang?",
+      teksSoal: "Dini punya <b>30 stiker</b>, membeli lagi <b>25 stiker</b>, lalu memberikan <b>12 stiker</b> ke adiknya. Berapa stiker Dini sekarang?",
       label1: "Total Setelah Beli",
       label2: "Diberikan",
-      val1: 40,
-      val2: 10,
+      val1: 55,
+      val2: 12,
       icon: "fa-note-sticky",
       gambar: twemoji("1f31f"),
       color: "text-indigo-500",
-      hint: "Hitung (25 + 15) dulu = 40, lalu kurangi 10.",
-      kunciJawaban: 30
+      hint: "Hitung (30 + 25) dulu = 55, lalu kurangi 12.",
+      kunciJawaban: 43
     },
     {
-      teksSoal: "Di bus ada <b>30 penumpang</b>. Di halte A naik <b>12 orang</b>, lalu turun <b>15 orang</b>. Berapa penumpang di bus sekarang?",
+      teksSoal: "Di bus ada <b>35 penumpang</b>. Di halte A naik <b>28 orang</b>, lalu turun <b>18 orang</b>. Berapa penumpang di bus sekarang?",
       label1: "Total Setelah Naik",
       label2: "Turun Bus",
-      val1: 42,
-      val2: 15,
+      val1: 63,
+      val2: 18,
       icon: "fa-bus",
       gambar: twemoji("1f68c"),
       color: "text-sky-500",
-      hint: "Hitung (30 + 12) = 42, kemudian kurangi 15.",
-      kunciJawaban: 27
+      hint: "Hitung (35 + 28) = 63, kemudian kurangi 18.",
+      kunciJawaban: 45
     },
     {
-      teksSoal: "Toko punya <b>35 botol minuman</b>, mendapat pasokan <b>20 botol</b>, lalu laku terjual <b>18 botol</b>. Berapa sisa botol minuman?",
+      teksSoal: "Toko punya <b>48 botol minuman</b>, mendapat pasokan <b>30 botol</b>, lalu laku terjual <b>23 botol</b>. Berapa sisa botol minuman?",
       label1: "Total Setelah Pasokan",
       label2: "Terjual",
-      val1: 55,
-      val2: 18,
+      val1: 78,
+      val2: 23,
       icon: "fa-bottle-water",
       gambar: twemoji("1f964"),
       color: "text-cyan-500",
-      hint: "Hitung (35 + 20) = 55, lalu kurangi 18.",
-      kunciJawaban: 37
+      hint: "Hitung (48 + 30) = 78, lalu kurangi 23.",
+      kunciJawaban: 55
     },
     {
-      teksSoal: "Budi mengumpulkan <b>28 daun</b>, menemukan lagi <b>22 daun</b>, namun <b>14 daun</b> hilang tertiup angin. Berapa sisa daun Budi?",
+      teksSoal: "Budi mengumpulkan <b>38 daun</b>, menemukan lagi <b>22 daun</b>, namun <b>14 daun</b> hilang tertiup angin. Berapa sisa daun Budi?",
       label1: "Total Dikumpulkan",
       label2: "Daun Hilang",
-      val1: 50,
+      val1: 60,
       val2: 14,
       icon: "fa-leaf",
       gambar: twemoji("1f343"),
       color: "text-green-500",
-      hint: "Hitung (28 + 22) = 50, lalu kurangkan dengan 14.",
-      kunciJawaban: 36
+      hint: "Hitung (38 + 22) = 60, lalu kurangkan dengan 14.",
+      kunciJawaban: 46
     },
     {
-      teksSoal: "Ibu menyiapkan <b>40 potong roti</b>. Ayah menambah <b>15 potong</b>, lalu dimakan anak-anak <b>21 potong</b>. Berapa sisa roti?",
+      teksSoal: "Ibu menyiapkan <b>45 potong roti</b>. Ayah menambah <b>18 potong</b>, lalu dimakan anak-anak <b>21 potong</b>. Berapa sisa roti?",
       label1: "Total Roti",
       label2: "Dimakan",
-      val1: 55,
+      val1: 63,
       val2: 21,
       icon: "fa-bread-slice",
       gambar: twemoji("1f35e"),
       color: "text-amber-700",
-      hint: "Hitung (40 + 15) = 55, lalu kurangi 21.",
-      kunciJawaban: 34
-    }
-  ],
-
-  // LEVEL 4: Hitung Cerita Kompleks & Analisis 2 Langkah
-  4: [
-    {
-      teksSoal: "Ibu membeli <b>4 kotak donat</b>. Setiap kotak berisi <b>6 buah donat</b>. Jika <b>8 donat</b> diberikan kepada tetangga, berapa sisa donat Ibu sekarang?",
-      label1: "Total Kotak & Isi",
-      label2: "Donat Diberikan",
-      val1: 24,
-      val2: 8,
-      icon: "fa-circle-dot",
-      gambar: twemoji("1f369"),
-      color: "text-pink-500",
-      hint: "Hitung total seluruh donat dulu (4 kotak × 6 = 24), lalu kurangi 8 donat yang diberikan kepada tetangga.",
-      kunciJawaban: 16
-    },
-    {
-      teksSoal: "Dalam sebuah keranjang terdapat <b>45 buah salak</b>. Ibu memasukkan lagi <b>15 buah salak</b>. Seluruh salak kemudian dimasukkan sama rata ke dalam <b>5 kantong plastik</b>. Berapa jumlah salak di setiap kantong plastik?",
-      label1: "Total Salak",
-      label2: "Jumlah Kantong",
-      val1: 60,
-      val2: 5,
-      icon: "fa-basket-shopping",
-      gambar: twemoji("1f330"),
-      color: "text-emerald-600",
-      hint: "Jumlahkan dulu seluruh salak di keranjang (45 + 15 = 60), lalu bagi hasilnya dengan jumlah kantong plastik (60 ÷ 5).",
-      kunciJawaban: 12
-    },
-    {
-      teksSoal: "Pak Tani memanen <b>3 kantong apel</b>. Setiap kantong berisi <b>12 apel</b>. Sebanyak <b>11 apel</b> dibagikan kepada anak-anak. Berapa sisa apel Pak Tani?",
-      label1: "Total Apel Panen",
-      label2: "Dibagikan",
-      val1: 36,
-      val2: 11,
-      icon: "fa-apple-whole",
-      gambar: twemoji("1f34e"),
-      color: "text-red-600",
-      hint: "Hitung total apel panen (3 kantong × 12 = 36), lalu kurangi 11 apel yang dibagikan.",
-      kunciJawaban: 25
-    },
-    {
-      teksSoal: "Ahmad memiliki <b>5 bungkus permen</b>. Setiap bungkus berisi <b>8 permen</b>. Ahmad membeli lagi <b>15 permen</b> secara eceran. Berapa total permen Ahmad sekarang?",
-      label1: "Permen Bungkus",
-      label2: "Permen Eceran",
-      val1: 40,
-      val2: 15,
-      icon: "fa-candy-cane",
-      gambar: twemoji("1f36c"),
-      color: "text-violet-500",
-      hint: "Hitung dulu permen dari bungkus (5 × 8 = 40), lalu tambahkan dengan 15 permen eceran.",
-      kunciJawaban: 55
-    },
-    {
-      teksSoal: "Sebuah perpustakaan menerima <b>6 dus buku</b>. Setiap dus berisi <b>10 buku</b>. Jika <b>18 buku</b> disumbangkan ke panti asuhan, berapa sisa buku di perpustakaan?",
-      label1: "Total Buku Dus",
-      label2: "Disumbangkan",
-      val1: 60,
-      val2: 18,
-      icon: "fa-book-open",
-      gambar: twemoji("1f4da"),
-      color: "text-indigo-600",
-      hint: "Hitung dulu total buku dalam dus (6 × 10 = 60), lalu kurangi dengan 18 buku yang disumbangkan.",
+      hint: "Hitung (45 + 18) = 63, lalu kurangi 21.",
       kunciJawaban: 42
     }
   ],
 
-  // LEVEL 5: Cerita Kompleks 3 Langkah (kali, tambah/kurang, bagi) - jawaban bisa 3 digit
+  // LEVEL 4: Hitung Cerita Kompleks & Analisis 2 Langkah (hasil 60-85)
+  4: [
+    {
+      teksSoal: "Ibu membeli <b>8 kotak donat</b>. Setiap kotak berisi <b>12 buah donat</b>. Jika <b>21 donat</b> diberikan kepada tetangga, berapa sisa donat Ibu sekarang?",
+      label1: "Total Kotak & Isi",
+      label2: "Donat Diberikan",
+      val1: 96,
+      val2: 21,
+      icon: "fa-circle-dot",
+      gambar: twemoji("1f369"),
+      color: "text-pink-500",
+      hint: "Hitung total seluruh donat dulu (8 kotak × 12 = 96), lalu kurangi 21 donat yang diberikan kepada tetangga.",
+      kunciJawaban: 75
+    },
+    {
+      teksSoal: "Dalam sebuah keranjang terdapat <b>96 buah salak</b>. Ibu memasukkan lagi <b>44 buah salak</b>. Seluruh salak kemudian dimasukkan sama rata ke dalam <b>2 kantong plastik</b>. Berapa jumlah salak di setiap kantong plastik?",
+      label1: "Total Salak",
+      label2: "Jumlah Kantong",
+      val1: 140,
+      val2: 2,
+      icon: "fa-basket-shopping",
+      gambar: twemoji("1f330"),
+      color: "text-emerald-600",
+      hint: "Jumlahkan dulu seluruh salak di keranjang (96 + 44 = 140), lalu bagi hasilnya dengan jumlah kantong plastik (140 ÷ 2).",
+      kunciJawaban: 70
+    },
+    {
+      teksSoal: "Pak Tani memanen <b>7 kantong apel</b>. Setiap kantong berisi <b>12 apel</b>. Sebanyak <b>19 apel</b> dibagikan kepada anak-anak. Berapa sisa apel Pak Tani?",
+      label1: "Total Apel Panen",
+      label2: "Dibagikan",
+      val1: 84,
+      val2: 19,
+      icon: "fa-apple-whole",
+      gambar: twemoji("1f34e"),
+      color: "text-red-600",
+      hint: "Hitung total apel panen (7 kantong × 12 = 84), lalu kurangi 19 apel yang dibagikan.",
+      kunciJawaban: 65
+    },
+    {
+      teksSoal: "Ahmad memiliki <b>9 bungkus permen</b>. Setiap bungkus berisi <b>8 permen</b>. Ahmad membeli lagi <b>11 permen</b> secara eceran. Berapa total permen Ahmad sekarang?",
+      label1: "Permen Bungkus",
+      label2: "Permen Eceran",
+      val1: 72,
+      val2: 11,
+      icon: "fa-candy-cane",
+      gambar: twemoji("1f36c"),
+      color: "text-violet-500",
+      hint: "Hitung dulu permen dari bungkus (9 × 8 = 72), lalu tambahkan dengan 11 permen eceran.",
+      kunciJawaban: 83
+    },
+    {
+      teksSoal: "Sebuah perpustakaan menerima <b>9 dus buku</b>. Setiap dus berisi <b>10 buku</b>. Jika <b>28 buku</b> disumbangkan ke panti asuhan, berapa sisa buku di perpustakaan?",
+      label1: "Total Buku Dus",
+      label2: "Disumbangkan",
+      val1: 90,
+      val2: 28,
+      icon: "fa-book-open",
+      gambar: twemoji("1f4da"),
+      color: "text-indigo-600",
+      hint: "Hitung dulu total buku dalam dus (9 × 10 = 90), lalu kurangi dengan 28 buku yang disumbangkan.",
+      kunciJawaban: 62
+    }
+  ],
+
+  // LEVEL 5: Cerita Kompleks 3 Langkah (kali, tambah/kurang, bagi) - ratusan (hasil 100-155)
   5: [
     {
       teksSoal: "Perpustakaan sekolah punya <b>7 rak</b>. Setiap rak berisi <b>15 buku</b>. Minggu ini sekolah menerima sumbangan <b>48 buku</b> baru. Berapa total buku di perpustakaan sekarang?",
@@ -283,16 +283,16 @@ const soalBank = {
       kunciJawaban: 153
     },
     {
-      teksSoal: "Pak Tani memanen <b>9 keranjang</b> mangga. Setiap keranjang berisi <b>16 mangga</b>. Ia membeli lagi <b>56 mangga</b> dari tetangga. Semua mangga dibagi sama rata ke <b>8 kotak</b>. Berapa mangga di setiap kotak?",
+      teksSoal: "Pak Tani memanen <b>12 keranjang</b> mangga. Setiap keranjang berisi <b>15 mangga</b>. Ia membeli lagi <b>60 mangga</b> dari tetangga. Semua mangga dibagi sama rata ke <b>2 kotak</b>. Berapa mangga di setiap kotak?",
       label1: "Total Mangga",
       label2: "Jumlah Kotak",
-      val1: 200,
-      val2: 8,
+      val1: 240,
+      val2: 2,
       icon: "fa-apple-whole",
       gambar: twemoji("1f96d"),
       color: "text-orange-500",
-      hint: "Langkah 1: 9 × 16 = 144. Langkah 2: 144 + 56 = 200. Langkah 3: 200 ÷ 8.",
-      kunciJawaban: 25
+      hint: "Langkah 1: 12 × 15 = 180. Langkah 2: 180 + 60 = 240. Langkah 3: 240 ÷ 2.",
+      kunciJawaban: 120
     },
     {
       teksSoal: "Dina punya <b>250 manik-manik</b>. Ia membuat <b>8 gelang</b>, dan setiap gelang memakai <b>15 manik-manik</b>. Berapa sisa manik-manik Dina?",
@@ -307,28 +307,28 @@ const soalBank = {
       kunciJawaban: 130
     },
     {
-      teksSoal: "Panitia menyiapkan <b>6 kotak</b> nasi. Setiap kotak berisi <b>24 bungkus</b>. Lalu datang tambahan <b>36 bungkus</b>. Semua nasi dibagikan sama rata ke <b>9 kelas</b>. Berapa bungkus nasi yang diterima tiap kelas?",
+      teksSoal: "Panitia menyiapkan <b>12 kotak</b> nasi. Setiap kotak berisi <b>24 bungkus</b>. Lalu datang tambahan <b>36 bungkus</b>. Semua nasi dibagikan sama rata ke <b>3 kelas</b>. Berapa bungkus nasi yang diterima tiap kelas?",
       label1: "Total Nasi",
       label2: "Jumlah Kelas",
-      val1: 180,
-      val2: 9,
+      val1: 324,
+      val2: 3,
       icon: "fa-box",
       gambar: twemoji("1f371"),
       color: "text-amber-600",
-      hint: "Langkah 1: 6 × 24 = 144. Langkah 2: 144 + 36 = 180. Langkah 3: 180 ÷ 9.",
-      kunciJawaban: 20
+      hint: "Langkah 1: 12 × 24 = 288. Langkah 2: 288 + 36 = 324. Langkah 3: 324 ÷ 3.",
+      kunciJawaban: 108
     },
     {
-      teksSoal: "Sebuah toko buku punya <b>25 rak</b> berisi masing-masing <b>12 buku</b>. Sebanyak <b>87 buku</b> terjual, lalu <b>34 buku</b> dikembalikan pembeli. Berapa buku di toko sekarang?",
+      teksSoal: "Sebuah toko buku punya <b>15 rak</b> berisi masing-masing <b>12 buku</b>. Sebanyak <b>87 buku</b> terjual, lalu <b>34 buku</b> dikembalikan pembeli. Berapa buku di toko sekarang?",
       label1: "Buku Setelah Terjual",
       label2: "Buku Dikembalikan",
-      val1: 213,
+      val1: 93,
       val2: 34,
       icon: "fa-book-open",
       gambar: twemoji("1f4d6"),
       color: "text-indigo-600",
-      hint: "Langkah 1: 25 × 12 = 300. Langkah 2: 300 − 87 = 213. Langkah 3: 213 + 34.",
-      kunciJawaban: 247
+      hint: "Langkah 1: 15 × 12 = 180. Langkah 2: 180 − 87 = 93. Langkah 3: 93 + 34.",
+      kunciJawaban: 127
     }
   ]
 };
